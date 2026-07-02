@@ -1,16 +1,100 @@
-{
-  "name": "my-tip-ai",
-  "version": "1.0.0",
-  "private": true,
-  "description": "My Tip AI Assistant",
-  "scripts": {
-    "start": "expo start",
-    "android": "expo run:android",
-    "ios": "expo run:ios"
-  },
-  "dependencies": {
-    "expo": "^53.0.0",
-    "react": "19.0.0",
-    "react-native": "0.79.0"
-  }
+import React, { useState } from "react";
+import {
+  SafeAreaView,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+
+export default function App() {
+  const [message, setMessage] = useState("");
+  const [reply, setReply] = useState("👋 Welcome to My Tip AI");
+
+  const sendMessage = async () => {
+    if (!message.trim()) return;
+
+    try {
+      const res = await fetch("https://YOUR-WORKER-URL.workers.dev", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: message,
+        }),
+      });
+
+      const data = await res.json();
+      setReply(data.reply || "No response");
+    } catch (e) {
+      setReply("❌ Server Error");
+    }
+
+    setMessage("");
+  };
+
+  return (
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: "#0f172a", padding: 20 }}
+    >
+      <Text
+        style={{
+          color: "white",
+          fontSize: 30,
+          fontWeight: "bold",
+          textAlign: "center",
+          marginVertical: 20,
+        }}
+      >
+        🤖 My Tip AI
+      </Text>
+
+      <ScrollView
+        style={{
+          flex: 1,
+          backgroundColor: "#1e293b",
+          borderRadius: 10,
+          padding: 15,
+          marginBottom: 15,
+        }}
+      >
+        <Text style={{ color: "white", fontSize: 16 }}>{reply}</Text>
+      </ScrollView>
+
+      <TextInput
+        value={message}
+        onChangeText={setMessage}
+        placeholder="Ask anything..."
+        placeholderTextColor="#999"
+        style={{
+          backgroundColor: "#334155",
+          color: "white",
+          padding: 15,
+          borderRadius: 10,
+          marginBottom: 10,
+        }}
+      />
+
+      <TouchableOpacity
+        onPress={sendMessage}
+        style={{
+          backgroundColor: "#2563eb",
+          padding: 15,
+          borderRadius: 10,
+        }}
+      >
+        <Text
+          style={{
+            color: "white",
+            textAlign: "center",
+            fontWeight: "bold",
+          }}
+        >
+          Send
+        </Text>
+      </TouchableOpacity>
+    </SafeAreaView>
+  );
 }
