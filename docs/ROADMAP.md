@@ -1,4 +1,21 @@
-# My Tip AI Roadmap
+# MyTip AI
+
+## 🚀 Features
+
+- Floating AI Assistant
+- Voice Chat
+- Myanmar Language
+- English Language
+- OCR Image Reader
+- AI Image Generator
+- AI Video Generator
+- GitHub Sync
+- Android Support
+- iPhone Support
+
+## Status
+
+🟢 Development Started
 
 ## 🚀 Phase 1
 - AI Chat
