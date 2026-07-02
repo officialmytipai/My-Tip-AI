@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "My Tip AI",
+    "slug": "my-tip-ai",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  }
+}
